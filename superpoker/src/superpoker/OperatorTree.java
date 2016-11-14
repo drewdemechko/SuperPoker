@@ -84,168 +84,192 @@ public class OperatorTree {
                                         rootChild.getOperator().operate(C.getValue(),
                                                 r.getOperator().operate(A.getValue(), B.getValue())));
                             if(temp == 24)
-                                return "" + A + r.getOperator() + B + rootChild.getOperator() + C + child.getOperator() + D;
+                                return "" + D + child.getOperator() + "(" + C + rootChild.getOperator() + "(" + A + r.getOperator() + B + "))";
+                                //return "" + A + r.getOperator() + B + rootChild.getOperator() + C + child.getOperator() + D;
                             
                             //A * B * D * C
                             temp = child.getOperator().operate(C.getValue(), 
                                         rootChild.getOperator().operate(D.getValue(),
                                                 r.getOperator().operate(A.getValue(), B.getValue())));
                             if(temp == 24)
-                                return "" + A + r.getOperator() + B + rootChild.getOperator() + D + child.getOperator() + C;
+                                return "" + C + child.getOperator() + "(" + D + rootChild.getOperator() + "(" + A + r.getOperator() + B + "))";
+                                //return "" + A + r.getOperator() + B + rootChild.getOperator() + D + child.getOperator() + C;
                             
                             //A * C * D * B
                             temp = child.getOperator().operate(B.getValue(), 
                                         rootChild.getOperator().operate(D.getValue(),
                                                 r.getOperator().operate(A.getValue(), C.getValue())));
                             if(temp == 24)
-                                return "" + A + r.getOperator() + C + rootChild.getOperator() + D + child.getOperator() + B;
+                                           return "" + B + child.getOperator() + "(" + D + rootChild.getOperator() + "(" + A + r.getOperator() + C + "))";
+                                //return "" + A + r.getOperator() + C + rootChild.getOperator() + D + child.getOperator() + B;
                             
                             //A * C * B * D
                             temp = child.getOperator().operate(D.getValue(), 
                                         rootChild.getOperator().operate(B.getValue(),
                                                 r.getOperator().operate(A.getValue(), C.getValue())));
                             if(temp == 24)
-                                return "" + A + r.getOperator() + B + rootChild.getOperator() + D + child.getOperator() + C;
+                                return "" + D + child.getOperator() + "(" + B + rootChild.getOperator() + "(" + A + r.getOperator() + C + "))";
+                                //return "" + A + r.getOperator() + C + rootChild.getOperator() + B + child.getOperator() + D;
                             
                             //A * D * C * B
                             temp = child.getOperator().operate(B.getValue(), 
                                         rootChild.getOperator().operate(C.getValue(),
                                                 r.getOperator().operate(A.getValue(), D.getValue())));
                             if(temp == 24)
-                                return "" + A + r.getOperator() + D + rootChild.getOperator() + C + child.getOperator() + B;
+                                return "" + B + child.getOperator() + "(" + C + rootChild.getOperator() + "(" + A + r.getOperator() + D + "))";
+                                //return "" + A + r.getOperator() + D + rootChild.getOperator() + C + child.getOperator() + B;
                             
                             //A * D * B * C
                             temp = child.getOperator().operate(C.getValue(), 
                                         rootChild.getOperator().operate(B.getValue(),
                                                 r.getOperator().operate(A.getValue(), D.getValue())));
                             if(temp == 24)
-                                return "" + A + r.getOperator() + D + rootChild.getOperator() + B + child.getOperator() + C;
+                                return "" + C + child.getOperator() + "(" + B + rootChild.getOperator() + "(" + A + r.getOperator() + D + "))";
+                                //return "" + A + r.getOperator() + D + rootChild.getOperator() + B + child.getOperator() + C;
                             
                             //B * C * D * A
                             temp = child.getOperator().operate(A.getValue(), 
                                         rootChild.getOperator().operate(D.getValue(),
                                                 r.getOperator().operate(B.getValue(), C.getValue())));
                             if(temp == 24)
-                                return "" + B + r.getOperator() + C + rootChild.getOperator() + D + child.getOperator() + A;
+                                return "" + A + child.getOperator() + "(" + D + rootChild.getOperator() + "(" + B + r.getOperator() + C + "))";
+                                //return "" + B + r.getOperator() + C + rootChild.getOperator() + D + child.getOperator() + A;
                             
                             //B * C * A * D
                             temp = child.getOperator().operate(D.getValue(), 
                                         rootChild.getOperator().operate(A.getValue(),
                                                 r.getOperator().operate(B.getValue(), C.getValue())));
                             if(temp == 24)
-                                return "" + B + r.getOperator() + C + rootChild.getOperator() + A + child.getOperator() + D;
+                                return "" + D + child.getOperator() + "(" + A + rootChild.getOperator() + "(" + B + r.getOperator() + C + "))";
+                                //return "" + D + child.getOperator() + "(" + A + rootChild.getOperator() + "(" + B + r.getOperator() + C + "))";
                             
                             //B * A * C * D
                             temp = child.getOperator().operate(D.getValue(), 
                                         rootChild.getOperator().operate(C.getValue(),
                                                 r.getOperator().operate(B.getValue(), A.getValue())));
                             if(temp == 24)
-                                return "" + B + r.getOperator() + A + rootChild.getOperator() + C + child.getOperator() + D;
+                                return "" + D + child.getOperator() + "(" + C + rootChild.getOperator() + "(" + B + r.getOperator() + A + "))";
+                                //return "" + B + r.getOperator() + A + rootChild.getOperator() + C + child.getOperator() + D;
                             
                             //B * A * D * C
                             temp = child.getOperator().operate(C.getValue(), 
                                         rootChild.getOperator().operate(D.getValue(),
                                                 r.getOperator().operate(B.getValue(), A.getValue())));
                             if(temp == 24)
-                                return "" + B + r.getOperator() + A + rootChild.getOperator() + D + child.getOperator() + C;
+                                return "" + C + child.getOperator() + "(" + D + rootChild.getOperator() + "(" + B + r.getOperator() + A + "))";
+                                //return "" + B + r.getOperator() + A + rootChild.getOperator() + D + child.getOperator() + C;
                             
                             //B * D * A * C
                             temp = child.getOperator().operate(C.getValue(), 
                                         rootChild.getOperator().operate(A.getValue(),
                                                 r.getOperator().operate(B.getValue(), D.getValue())));
                             if(temp == 24)
-                                return "" + B + r.getOperator() + D + rootChild.getOperator() + A + child.getOperator() + C;
+                                return "" + C + child.getOperator() + "(" + A + rootChild.getOperator() + "(" + B + r.getOperator() + D + "))";
+                                //return "" + B + r.getOperator() + D + rootChild.getOperator() + A + child.getOperator() + C;
                             
                             //B * D * C * A
                             temp = child.getOperator().operate(A.getValue(), 
                                         rootChild.getOperator().operate(C.getValue(),
                                                 r.getOperator().operate(B.getValue(), D.getValue())));
                             if(temp == 24)
-                                return "" + B + r.getOperator() + D + rootChild.getOperator() + C + child.getOperator() + A;
+                                return "" + A + child.getOperator() + "(" + C + rootChild.getOperator() + "(" + B + r.getOperator() + D + "))";
+                                //return "" + B + r.getOperator() + D + rootChild.getOperator() + C + child.getOperator() + A;
                             
                             //C * D * A * B
                             temp = child.getOperator().operate(B.getValue(), 
                                         rootChild.getOperator().operate(A.getValue(),
                                                 r.getOperator().operate(C.getValue(), D.getValue())));
                             if(temp == 24)
-                                return "" + C + r.getOperator() + D + rootChild.getOperator() + A + child.getOperator() + B;
+                                return "" + B + child.getOperator() + "(" + A + rootChild.getOperator() + "(" + C + r.getOperator() + D + "))";
+                                //return "" + C + r.getOperator() + D + rootChild.getOperator() + A + child.getOperator() + B;
                             
                             //C * D * B * A
                             temp = child.getOperator().operate(A.getValue(), 
                                         rootChild.getOperator().operate(B.getValue(),
                                                 r.getOperator().operate(C.getValue(), D.getValue())));
                             if(temp == 24)
-                                return "" + C + r.getOperator() + D + rootChild.getOperator() + B + child.getOperator() + A;
+                                return "" + A + child.getOperator() + "(" + B + rootChild.getOperator() + "(" + C + r.getOperator() + D + "))";
+                                //return "" + C + r.getOperator() + D + rootChild.getOperator() + B + child.getOperator() + A;
                             
                             //C * A * D * B
                             temp = child.getOperator().operate(B.getValue(), 
                                         rootChild.getOperator().operate(D.getValue(),
                                                 r.getOperator().operate(C.getValue(), A.getValue())));
                             if(temp == 24)
-                                return "" + C + r.getOperator() + A + rootChild.getOperator() + D + child.getOperator() + B;
+                                return "" + B + child.getOperator() + "(" + D + rootChild.getOperator() + "(" + C + r.getOperator() + A + "))";
+                                //return "" + C + r.getOperator() + A + rootChild.getOperator() + D + child.getOperator() + B;
                             
                             //C * A * B * D
                             temp = child.getOperator().operate(D.getValue(), 
                                         rootChild.getOperator().operate(B.getValue(),
                                                 r.getOperator().operate(C.getValue(), A.getValue())));
                             if(temp == 24)
-                                return "" + C + r.getOperator() + A + rootChild.getOperator() + B + child.getOperator() + D;
+                                return "" + D + child.getOperator() + "(" + B + rootChild.getOperator() + "(" + C + r.getOperator() + A + "))";
+                                //return "" + C + r.getOperator() + A + rootChild.getOperator() + B + child.getOperator() + D;
                             
                             //C * B * A * D
                             temp = child.getOperator().operate(D.getValue(), 
                                         rootChild.getOperator().operate(A.getValue(),
                                                 r.getOperator().operate(C.getValue(), B.getValue())));
                             if(temp == 24)
-                                return "" + C + r.getOperator() + B + rootChild.getOperator() + A + child.getOperator() + D;
+                                return "" + D + child.getOperator() + "(" + A + rootChild.getOperator() + "(" + C + r.getOperator() + B + "))";
+                                //return "" + C + r.getOperator() + B + rootChild.getOperator() + A + child.getOperator() + D;
                             
                             //C * B * D * A
                             temp = child.getOperator().operate(A.getValue(), 
                                         rootChild.getOperator().operate(D.getValue(),
                                                 r.getOperator().operate(C.getValue(), B.getValue())));
                             if(temp == 24)
-                                return "" + C + r.getOperator() + B + rootChild.getOperator() + D + child.getOperator() + A;
+                                return "" + A + child.getOperator() + "(" + D + rootChild.getOperator() + "(" + C + r.getOperator() + B + "))";
+                                //return "" + C + r.getOperator() + B + rootChild.getOperator() + D + child.getOperator() + A;
                             
                             //D * A * B * C
                             temp = child.getOperator().operate(C.getValue(), 
                                         rootChild.getOperator().operate(B.getValue(),
                                                 r.getOperator().operate(D.getValue(), A.getValue())));
                             if(temp == 24)
-                                return "" + D + r.getOperator() + A + rootChild.getOperator() + B + child.getOperator() + C;
+                                return "" + C + child.getOperator() + "(" + B + rootChild.getOperator() + "(" + D + r.getOperator() + A + "))";
+                                //return "" + D + r.getOperator() + A + rootChild.getOperator() + B + child.getOperator() + C;
                             
                             //D * A * C * B
                             temp = child.getOperator().operate(B.getValue(), 
                                         rootChild.getOperator().operate(C.getValue(),
                                                 r.getOperator().operate(D.getValue(), A.getValue())));
                             if(temp == 24)
-                                return "" + D + r.getOperator() + A + rootChild.getOperator() + C + child.getOperator() + B;
+                                return "" + B + child.getOperator() + "(" + C + rootChild.getOperator() + "(" + D + r.getOperator() + A + "))";
+                                //return "" + D + r.getOperator() + A + rootChild.getOperator() + C + child.getOperator() + B;
                             
                             //D * B * A * C
                             temp = child.getOperator().operate(C.getValue(), 
                                         rootChild.getOperator().operate(A.getValue(),
                                                 r.getOperator().operate(D.getValue(), B.getValue())));
                             if(temp == 24)
-                                return "" + D + r.getOperator() + B + rootChild.getOperator() + A + child.getOperator() + C;
+                                return "" + C + child.getOperator() + "(" + A + rootChild.getOperator() + "(" + D + r.getOperator() + B + "))";
+                                //return "" + D + r.getOperator() + B + rootChild.getOperator() + A + child.getOperator() + C;
                             
                             //D * B * C * A
                             temp = child.getOperator().operate(A.getValue(), 
                                         rootChild.getOperator().operate(C.getValue(),
                                                 r.getOperator().operate(D.getValue(), B.getValue())));
                             if(temp == 24)
-                                return "" + D + r.getOperator() + B + rootChild.getOperator() + C + child.getOperator() + A;
+                                return "" + A + child.getOperator() + "(" + C + rootChild.getOperator() + "(" + D + r.getOperator() + B + "))";
+                                //return "" + D + r.getOperator() + B + rootChild.getOperator() + C + child.getOperator() + A;
                             
                             //D * C * A * B
                             temp = child.getOperator().operate(B.getValue(), 
                                         rootChild.getOperator().operate(A.getValue(),
                                                 r.getOperator().operate(D.getValue(), C.getValue())));
                             if(temp == 24)
-                                return "" + D + r.getOperator() + C + rootChild.getOperator() + A + child.getOperator() + B;
+                                return "" + B + child.getOperator() + "(" + A + rootChild.getOperator() + "(" + D + r.getOperator() + C + "))";
+                                //return "" + D + r.getOperator() + C + rootChild.getOperator() + A + child.getOperator() + B;
                             
                             //D * C * B * A
                             temp = child.getOperator().operate(A.getValue(), 
                                         rootChild.getOperator().operate(B.getValue(),
                                                 r.getOperator().operate(D.getValue(), C.getValue())));
                             if(temp == 24)
-                                return "" + D + r.getOperator() + C + rootChild.getOperator() + B + child.getOperator() + A;
+                                return "" + A + child.getOperator() + "(" + B + rootChild.getOperator() + "(" + D + r.getOperator() + C + "))";
+                                //return "" + D + r.getOperator() + C + rootChild.getOperator() + B + child.getOperator() + A;
                         }
                     }
                 }
