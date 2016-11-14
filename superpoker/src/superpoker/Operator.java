@@ -11,6 +11,7 @@ public class Operator {
     
     public int operate(int a, int b)
     {
+        try{
         if(symbol.equals("+"))
             return a + b;
         else if(symbol.equals("-"))
@@ -19,6 +20,9 @@ public class Operator {
             return a * b;
         else
             return a / b;
+        }catch(ArithmeticException e){
+            return 0;
+        }
     }
     
     @Override
