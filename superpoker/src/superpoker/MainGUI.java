@@ -1,16 +1,13 @@
-
 package superpoker;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.layout.Border;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -32,9 +29,9 @@ public class MainGUI extends JFrame {
 
     public MainGUI() {
         super("Super Poker");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 500, 500);
-        setLayout(new BorderLayout());
+        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super.setBounds(100, 100, 500, 500);
+        super.setLayout(new BorderLayout());
 
         //North Panel
         JPanel northPanel = new JPanel();
@@ -210,11 +207,6 @@ public class MainGUI extends JFrame {
         JTextField cardSelection = new JTextField();
         cardSelection.setColumns(20);
 
-        JButton send = new JButton("Send");
-
-        //localGamePanel.add(cardSelection);
-        //localGamePanel.add(send);
-
         //Server GUI
         JPanel serverGamePanel = new JPanel();
         serverGamePanel.setLayout(
@@ -258,6 +250,13 @@ public class MainGUI extends JFrame {
                 solution.setText("");
                 newGame(deck);
             }
+        });
+        
+        exitGame.addActionListener(new ActionListener(){
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               System.exit(0);
+           }
         });
         setVisible(true);
     }
