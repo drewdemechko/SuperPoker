@@ -23,19 +23,16 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
-/**
- *
- * @author mk
- */
 public class MainGUI extends JFrame {
     JButton[] deck;
+    DeckSearcher deckSearcher = new DeckSearcher(); //create object at runtime --for performance enhancement
 
     public MainGUI() {
         super("Super Poker");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 500, 500);
         setLayout(new BorderLayout());
-
+        
         //North Panel
         JPanel northPanel = new JPanel();
         northPanel.setBorder(BorderFactory.createTitledBorder("Game Type"));
@@ -188,12 +185,12 @@ public class MainGUI extends JFrame {
                             tempCardDescriptions.add(cardDescriptions[i]);
                             tempCardValues.add(cardValues[i]); 
                         }
-                OperatorTree operatorTree = new OperatorTree(new Card(tempCardDescriptions.get(0), tempCardValues.get(0)),
+                deckSearcher.createDeck(new Card(tempCardDescriptions.get(0), tempCardValues.get(0)),
                         new Card(tempCardDescriptions.get(1), tempCardValues.get(1)), 
                         new Card(tempCardDescriptions.get(2), tempCardValues.get(2)), 
                         new Card(tempCardDescriptions.get(3), tempCardValues.get(3)));
-
-                solution.setText(operatorTree.findSolution());
+                
+                solution.setText(deckSearcher.findSolution());
                 }
             }
         };
@@ -249,6 +246,8 @@ public class MainGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameModeLayout.last(gameModePanel);
+                solution.setText("");
+                compete(solution);
             }
         });
 
@@ -317,8 +316,20 @@ public class MainGUI extends JFrame {
         deck[50].setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/qofspades.png")).getImage().getScaledInstance(33, 80, java.awt.Image.SCALE_SMOOTH)));
         deck[51].setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/kofspades.png")).getImage().getScaledInstance(33, 80, java.awt.Image.SCALE_SMOOTH)));        
         for(int i = 0; i < 52; i++)
-            deck[i].setEnabled(true);
+            deck[i].setEnabled(true);        
+    }
+    
+    public void compete(JTextField txtSolution){
+        if(deckSearcher.urlIsNull())
+            deckSearcher.createURL();
         
+        /*deckSearcher.createDeck(new Card(tempCardDescriptions.get(0), tempCardValues.get(0)),
+                        new Card(tempCardDescriptions.get(1), tempCardValues.get(1)), 
+                        new Card(tempCardDescriptions.get(2), tempCardValues.get(2)), 
+                        new Card(tempCardDescriptions.get(3), tempCardValues.get(3)));
+        */
+        txtSolution.setText(deckSearcher.findSolutionThroughEndpoint());
+                //txtsolution.setText(deckSearcher.findSolution());
     }
 }
 //-----Example using the OperatorTree class to find solution
