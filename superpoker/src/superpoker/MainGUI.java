@@ -1,16 +1,13 @@
-
 package superpoker;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.layout.Border;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -23,9 +20,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
-public class MainGUI extends JFrame {
+public class MainGUI extends JFrame implements Runnable{
     JButton[] deck;
     DeckSearcher deckSearcher = new DeckSearcher(); //create object at runtime --for performance enhancement
+    boolean compete = false;
+    JTextField solution;
+    Thread thread;
 
     public MainGUI() {
         super("Super Poker");
@@ -33,6 +33,10 @@ public class MainGUI extends JFrame {
         setBounds(100, 100, 500, 500);
         setLayout(new BorderLayout());
         
+        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super.setBounds(100, 100, 500, 500);
+        super.setLayout(new BorderLayout());
+
         //North Panel
         JPanel northPanel = new JPanel();
         northPanel.setBorder(BorderFactory.createTitledBorder("Game Type"));
@@ -54,7 +58,7 @@ public class MainGUI extends JFrame {
         JLabel solutionLabel = new JLabel("Solution");
         solutionLabel.setAlignmentY(JLabel.LEFT_ALIGNMENT);
 
-        JTextField solution = new JTextField();
+        solution = new JTextField();
         solution.setEditable(false);
         solution.setColumns(20);
 
@@ -207,11 +211,6 @@ public class MainGUI extends JFrame {
         JTextField cardSelection = new JTextField();
         cardSelection.setColumns(20);
 
-        JButton send = new JButton("Send");
-
-        //localGamePanel.add(cardSelection);
-        //localGamePanel.add(send);
-
         //Server GUI
         JPanel serverGamePanel = new JPanel();
         serverGamePanel.setLayout(
@@ -239,6 +238,8 @@ public class MainGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameModeLayout.first(gameModePanel);
+                compete = false;
+                newGame(deck);
             }
         });
         
@@ -247,7 +248,7 @@ public class MainGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 gameModeLayout.last(gameModePanel);
                 solution.setText("");
-                compete(solution);
+                compete();
             }
         });
 
@@ -257,6 +258,13 @@ public class MainGUI extends JFrame {
                 solution.setText("");
                 newGame(deck);
             }
+        });
+        
+        exitGame.addActionListener(new ActionListener(){
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               System.exit(0);
+           }
         });
         setVisible(true);
     }
@@ -319,20 +327,23 @@ public class MainGUI extends JFrame {
             deck[i].setEnabled(true);        
     }
     
-    public void compete(JTextField txtSolution){
-        if(deckSearcher.urlIsNull())
-            deckSearcher.createURL();
+    public void compete(){
+        solution.setText(deckSearcher.findSolutionThroughEndpoint());
+        compete = true;
         
-        /*deckSearcher.createDeck(new Card(tempCardDescriptions.get(0), tempCardValues.get(0)),
-                        new Card(tempCardDescriptions.get(1), tempCardValues.get(1)), 
-                        new Card(tempCardDescriptions.get(2), tempCardValues.get(2)), 
-                        new Card(tempCardDescriptions.get(3), tempCardValues.get(3)));
-        */
-        txtSolution.setText(deckSearcher.findSolutionThroughEndpoint());
-                //txtsolution.setText(deckSearcher.findSolution());
+        //use a thread to automatically update results
+        thread = new Thread(this);
+        thread.start();
+    }
+
+    @Override
+    public void run() {
+        while(compete){
+            solution.setText(deckSearcher.findSolutionThroughEndpoint());
+        }
+        
+        solution.setText("");
+        thread.interrupt();
     }
 }
-//-----Example using the OperatorTree class to find solution
-//        OperatorTree tree = new OperatorTree(new Card("Ace",1), new Card("3",3), new Card("5",5), new Card("2",2));
-//        System.out.println(tree.findSolution());
 

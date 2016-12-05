@@ -36,8 +36,6 @@ public class DeckSearcher implements IDeckSearcher{
     public void createURL(){
         try {
             url = new URL(ENDPOINT);
-            String temp = url.getAuthority();
-            System.out.println(temp);
             request = (HttpURLConnection) url.openConnection();
             request.setRequestMethod("GET");
             request.setRequestProperty("Accept", "application/json");
@@ -58,6 +56,9 @@ public class DeckSearcher implements IDeckSearcher{
     
     @Override
     public String findSolutionThroughEndpoint(){
+        
+        createURL();
+        
         BufferedReader in = null;
         try {
             in = new BufferedReader(new InputStreamReader(request.getInputStream()));
