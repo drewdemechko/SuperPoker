@@ -240,6 +240,10 @@ public class MainGUI extends JFrame implements Runnable{
                 gameModeLayout.first(gameModePanel);
                 compete = false;
                 newGame(deck);
+                
+                //Only allow the user to switch to server game mode
+                localGame.setEnabled(false);
+                serverGame.setEnabled(true);
             }
         });
         
@@ -249,6 +253,10 @@ public class MainGUI extends JFrame implements Runnable{
                 gameModeLayout.last(gameModePanel);
                 solution.setText("");
                 compete();
+                
+                //Only allow the user to switch to local game mode
+                localGame.setEnabled(true);
+                serverGame.setEnabled(false);
             }
         });
 
