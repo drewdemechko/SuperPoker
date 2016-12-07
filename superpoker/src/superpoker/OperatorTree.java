@@ -8,9 +8,9 @@ public class OperatorTree {
     private Card C;
     private Card D;
     
-    Operator[] operators = {new Operator("+"), new Operator("-"), new Operator("*"), new Operator("/")};
-    Node[] roots = {new Node(operators[0]),new Node(operators[1]),new Node(operators[2]),new Node(operators[3])};
-    Node temp;
+    private Operator[] operators = {new Operator("+"), new Operator("-"), new Operator("*"), new Operator("/")};
+    private Node[] roots = {new Node(operators[0]),new Node(operators[1]),new Node(operators[2]),new Node(operators[3])};
+    private Node temp;
     
     public OperatorTree(){
         //construct operator tree
@@ -22,6 +22,15 @@ public class OperatorTree {
                     temp.addChild(new Node(o1));
             } 
         }
+    }
+    
+    public String getOperators(){
+        String operations = "";
+        
+        for(Operator o : operators)
+            operations += o.toString();
+        
+        return operations;
     }
     
     public OperatorTree(Card A, Card B, Card C, Card D){
@@ -52,16 +61,32 @@ public class OperatorTree {
         this.A = card;
     }
     
+    public int getCardAValue(){
+        return this.A.getValue();
+    }
+    
     public void setCardB(Card card){
         this.B = card;
+    }
+    
+    public int getCardBValue(){
+        return this.B.getValue();
     }
 
     public void setCardC(Card card){
         this.C = card;
     }
     
+    public int getCardCValue(){
+        return this.C.getValue();
+    }
+    
     public void setCardD(Card card){
         this.D = card;
+    }
+    
+    public int getCardDValue(){
+        return this.D.getValue();
     }
     
     //Algorithm that returns the first available solution to 24
@@ -276,5 +301,9 @@ public class OperatorTree {
             }
         }
         return "No solution could be found!";
+    }
+    
+    public boolean solutionFound(){
+        return !(findSolution().equals("No solution could be found!"));
     }
 }

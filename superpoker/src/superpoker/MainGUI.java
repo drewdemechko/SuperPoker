@@ -15,8 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
@@ -26,6 +24,7 @@ public class MainGUI extends JFrame implements Runnable{
     boolean compete = false;
     JTextField solution;
     Thread thread;
+    int[] currentCardValues = new int[4];
 
     public MainGUI() {
         super("Super Poker");
@@ -41,6 +40,7 @@ public class MainGUI extends JFrame implements Runnable{
         JPanel northPanel = new JPanel();
         northPanel.setBorder(BorderFactory.createTitledBorder("Game Type"));
         JButton localGame = new JButton("Local Game");
+        localGame.setEnabled(false);
         JButton serverGame = new JButton("Server Game");
 
         northPanel.add(localGame, BorderLayout.NORTH);
@@ -216,12 +216,6 @@ public class MainGUI extends JFrame implements Runnable{
         serverGamePanel.setLayout(
                 new BoxLayout(serverGamePanel, BoxLayout.Y_AXIS));
 
-        JTextArea serverInfo = new JTextArea();
-        serverInfo.append("Connecting to server...");
-        JScrollPane scrollPane = new JScrollPane(serverInfo);
-
-        serverGamePanel.add(scrollPane);
-
         gameModePanel.add(localGamePanel, "Local Game");
         gameModePanel.add(serverGamePanel, "Server Game");
 
@@ -239,7 +233,8 @@ public class MainGUI extends JFrame implements Runnable{
             public void actionPerformed(ActionEvent e) {
                 gameModeLayout.first(gameModePanel);
                 compete = false;
-                newGame(deck);
+                newGame(deck,true);
+                currentCardValues = new int[4];
                 
                 //Only allow the user to switch to server game mode
                 localGame.setEnabled(false);
@@ -250,9 +245,9 @@ public class MainGUI extends JFrame implements Runnable{
         serverGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameModeLayout.last(gameModePanel);
                 solution.setText("");
                 compete();
+                newGame(deck,false);
                 
                 //Only allow the user to switch to local game mode
                 localGame.setEnabled(true);
@@ -264,7 +259,7 @@ public class MainGUI extends JFrame implements Runnable{
             @Override
             public void actionPerformed(ActionEvent e) {
                 solution.setText("");
-                newGame(deck);
+                newGame(deck,true);
             }
         });
         
@@ -277,7 +272,7 @@ public class MainGUI extends JFrame implements Runnable{
         setVisible(true);
     }
     
-    public void newGame(JButton[] deck)
+    public void newGame(JButton[] deck, boolean isLocalGame)
     {
         deck[0].setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/aofclubs.png")).getImage().getScaledInstance(33, 80, java.awt.Image.SCALE_SMOOTH)));
         deck[1].setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/2ofclubs.png")).getImage().getScaledInstance(33, 80, java.awt.Image.SCALE_SMOOTH)));
@@ -332,7 +327,17 @@ public class MainGUI extends JFrame implements Runnable{
         deck[50].setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/qofspades.png")).getImage().getScaledInstance(33, 80, java.awt.Image.SCALE_SMOOTH)));
         deck[51].setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/kofspades.png")).getImage().getScaledInstance(33, 80, java.awt.Image.SCALE_SMOOTH)));        
         for(int i = 0; i < 52; i++)
-            deck[i].setEnabled(true);        
+            deck[i].setEnabled(isLocalGame);        
+    }
+    public void flipAll(){
+        for(int i = 0; i < 52; i++)
+            deck[i].setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/backofcard.png")).getImage().getScaledInstance(33, 80, java.awt.Image.SCALE_SMOOTH)));
+    }
+    
+    public void flipRest(int nonFlip1, int nonFlip2, int nonFlip3, int nonFlip4){
+        for(int i = 0; i < 52; i++)
+            if(i != nonFlip1 && i != nonFlip2 && i != nonFlip3 && i != nonFlip4)
+                deck[i].setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("images/backofcard.png")).getImage().getScaledInstance(33, 80, java.awt.Image.SCALE_SMOOTH)));
     }
     
     public void compete(){
@@ -348,6 +353,19 @@ public class MainGUI extends JFrame implements Runnable{
     public void run() {
         while(compete){
             solution.setText(deckSearcher.findSolutionThroughEndpoint());
+            
+            //converts server results to display visually via card panel
+            OperatorTree ot = deckSearcher.getOperatorTree();
+            
+            if(ot.getCardAValue() != currentCardValues[0] || ot.getCardBValue() != currentCardValues[1] 
+                    || ot.getCardCValue() != currentCardValues[2] || ot.getCardDValue() != currentCardValues[3]){
+                currentCardValues[0] = ot.getCardAValue();
+                currentCardValues[1] = ot.getCardBValue();
+                currentCardValues[2] = ot.getCardCValue();
+                currentCardValues[3] = ot.getCardDValue();
+                newGame(deck,false);
+                flipRest(ot.getCardAValue()-1,ot.getCardBValue()+12,ot.getCardCValue()+25,ot.getCardDValue()+38);
+            }
         }
         
         solution.setText("");

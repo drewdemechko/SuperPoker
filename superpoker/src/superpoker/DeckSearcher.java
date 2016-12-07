@@ -3,33 +3,26 @@ package superpoker;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jdk.nashorn.internal.parser.JSONParser;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class DeckSearcher implements IDeckSearcher{
-    OperatorTree possibleComputationsTree;
-    String ENDPOINT = "http://seiisuperpoker.azurewebsites.net/api/SuperPoker";
-    URL url;
+    private OperatorTree possibleComputationsTree;
+    private String ENDPOINT = "http://seiisuperpoker.azurewebsites.net/api/SuperPoker";
+    private URL url;
     
-    HttpURLConnection request;
+    private HttpURLConnection request;
     
     public DeckSearcher(){
             possibleComputationsTree = new OperatorTree();
     }
     
-    public DeckSearcher(Card cardA, Card cardB, Card cardC, Card cardD) throws MalformedURLException{
+    public DeckSearcher(Card cardA, Card cardB, Card cardC, Card cardD){
         possibleComputationsTree = new OperatorTree(cardA, cardB, cardC, cardD);
     }
     
@@ -44,9 +37,9 @@ public class DeckSearcher implements IDeckSearcher{
             ex.printStackTrace();
         }  
     }
-  
-    public boolean urlIsNull(){
-        return url == null;
+    
+    public boolean isConnected(){
+        return request != null;
     }
     
     @Override
@@ -56,7 +49,6 @@ public class DeckSearcher implements IDeckSearcher{
     
     @Override
     public String findSolutionThroughEndpoint(){
-        
         createURL();
         
         BufferedReader in = null;
@@ -98,5 +90,10 @@ public class DeckSearcher implements IDeckSearcher{
     @Override
     public String findSolution(){
         return possibleComputationsTree.findSolution();
+    }
+    
+    @Override
+    public OperatorTree getOperatorTree(){
+        return possibleComputationsTree;
     }
 }
